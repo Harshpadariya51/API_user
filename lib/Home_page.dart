@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,15 +23,22 @@ class _HomepageState extends State<Homepage> {
         itemCount: users.length,
         itemBuilder: (context, index) {
           final user = users[index];
+          final name = user['name']['first'];
           final email = user['email'];
+          final imageurl = user['picture']['thumbnail'];
           return ListTile(
-            leading: CircleAvatar(child: Text('${index + 1}')),
-            title: Text(email),
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.network(imageurl),
+            ),
+            title: Text(name),
+            subtitle: Text(email),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: fetchuser,
+        child: const Icon(Icons.add),
       ),
     );
   }
